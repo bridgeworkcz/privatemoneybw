@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Portal SPA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Глобальна шапка з контактами, які змінює адмін -->
+    <header class="bg-slate-900 text-white p-4 shadow-md flex justify-between items-center flex-wrap gap-2">
+        <h1 class="text-xl font-bold">Portal System</h1>
+        <div class="text-sm flex gap-4 flex-wrap">
+            <div>Тел: <span id="site-phone" class="font-semibold">Завантаження...</span></div>
+            <div>Email: <span id="site-email" class="font-semibold">Завантаження...</span></div>
+            <div>Crypto: <span id="site-crypto" class="font-mono bg-slate-800 px-2 py-1 rounded">Завантаження...</span></div>
+        </div>
+        <div id="auth-buttons">
+            <button onclick="showView('login')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Вхід / Реєстрація</button>
+        </div>
+    </header>
+
+    <div class="container mx-auto mt-6 p-4">
+        
+        <!-- Форма Входу / Реєстрації -->
+        <div id="view-login" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Авторизація</h2>
+            <input id="login-email" type="email" placeholder="Email" class="w-full border p-2 mb-2 rounded">
+            <input id="login-pass" type="password" placeholder="Пароль" class="w-full border p-2 mb-4 rounded">
+            <div class="flex gap-2">
+                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Увійти</button>
+                <button onclick="handleRegister()" class="w-full bg-gray-600 text-white p-2 rounded hover:bg-gray-700">Зареєструватися</button>
+            </div>
+        </div>
+
+        <!-- Кабінет Клієнта -->
+        <div id="view-client" class="hidden">
+            <h2 class="text-2xl font-bold mb-4">Особистий кабінет клієнта</h2>
+            <div class="bg-white p-4 rounded shadow mb-6">
+                <h3 class="font-bold mb-2">Подати нову заявку та завантажити файл</h3>
+                <div class="flex flex-col md:flex-row gap-2">
+                    <input id="app-title" type="text" placeholder="Назва справи / документа" class="border p-2 rounded w-full md:w-1/3">
+                    <input id="app-file" type="file" class="p-2 border rounded">
+                    <button onclick="handleCreateApp()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Надіслати</button>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold mb-2">Мої справи</h3>
+            <div id="client-list" class="grid gap-4"></div>
+        </div>
+
+        <!-- Панель Адміністратора -->
+        <div id="view-admin" class="hidden">
+            <h2 class="text-2xl font-bold mb-4 text-red-600">Панель Адміністратора</h2>
+            
+            <!-- Секція глобальних налаштувань -->
+            <div class="bg-white p-4 rounded shadow mb-6 border-l-4 border-red-500">
+                <h3 class="font-bold mb-2">Керування контентом сайту (Зміни відображаються у всіх)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
+                    <input id="admin-phone" type="text" placeholder="Новий телефон" class="border p-2 rounded">
+                    <input id="admin-email" type="text" placeholder="Новий email" class="border p-2 rounded">
+                    <input id="admin-crypto" type="text" placeholder="Новий гаманець" class="border p-2 rounded">
+                </div>
+                <button onclick="handleSaveSettings()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Оновити дані сайту</button>
+            </div>
+
+            <h3 class="text-xl font-bold mb-2">Усі Заявки Клієнтів</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white rounded shadow text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Клієнт</th>
+                            <th class="p-3">Назва</th>
+                            <th class="p-3">Файл</th>
+                            <th class="p-3">Статус</th>
+                            <th class="p-3">Дія</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
